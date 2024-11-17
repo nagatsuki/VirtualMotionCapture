@@ -97,3 +97,4 @@ sysinfo.txt
 common.json
 Assets/_TerrainAutoUpgrade/
 .vsconfig
+/TrackerPositions.json
