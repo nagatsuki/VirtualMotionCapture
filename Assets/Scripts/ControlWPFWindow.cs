@@ -239,10 +239,10 @@ namespace VMC
                         modManager.ImportMods();
                     }
                 }
-                else if (e.CommandType == typeof(PipeCommands.LoadVRM))
+                else if (e.CommandType == typeof(PipeCommands.LoadVRMMeta))
                 {
-                    var d = (PipeCommands.LoadVRM)e.Data;
-                    await server.SendCommandAsync(new PipeCommands.ReturnLoadVRM { Data = LoadVRM(d.Path) }, e.RequestId);
+                    var d = (PipeCommands.LoadVRMMeta)e.Data;
+                    await server.SendCommandAsync(new PipeCommands.ReturnLoadVRMMeta { Data = LoadVRMMeta(d.Path) }, e.RequestId);
                 }
                 else if (e.CommandType == typeof(PipeCommands.LoadRemoteVRM))
                 {
@@ -255,7 +255,7 @@ namespace VMC
                     var t = ImportVRM(d.Path);
 
                     //メタ情報をOSC送信する
-                    VRMmetaLodedAction?.Invoke(LoadVRM(d.Path));
+                    VRMmetaLodedAction?.Invoke(LoadVRMMeta(d.Path));
                 }
 
                 else if (e.CommandType == typeof(PipeCommands.SetLipSyncEnable))
@@ -991,7 +991,7 @@ namespace VMC
 
         #region VRM
 
-        public UnityMemoryMappedFile.VRMData LoadVRM(string path)
+        public UnityMemoryMappedFile.VRMData LoadVRMMeta(string path)
         {
             if (string.IsNullOrEmpty(path) || File.Exists(path) == false)
             {
@@ -1766,7 +1766,7 @@ namespace VMC
                 await ImportVRM(Settings.Current.VRMPath);
 
                 //メタ情報をOSC送信する
-                VRMmetaLodedAction?.Invoke(LoadVRM(Settings.Current.VRMPath));
+                VRMmetaLodedAction?.Invoke(LoadVRMMeta(Settings.Current.VRMPath));
             }
 
             //SetResolutionは強制的にウインドウ枠を復活させるのでBorder設定の前にやっておく必要がある
