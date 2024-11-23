@@ -68,7 +68,7 @@ namespace VMC
         private System.Threading.SynchronizationContext context = null;
 
         public Action<GameObject> AdditionalSettingAction = null;
-        public Action<UnityMemoryMappedFile.VRMData> VRMmetaLodedAction = null;
+        public Action<UnityMemoryMappedFile.VRMData> VRMmetaLoadedAction = null;
         public Action<string> VRMRemoteLoadedAction = null;
 
         public Action<GameObject> EyeTracking_TobiiCalibrationAction = null;
@@ -255,7 +255,7 @@ namespace VMC
                     var t = ImportVRM(d.Path);
 
                     //メタ情報をOSC送信する
-                    VRMmetaLodedAction?.Invoke(LoadVRMMeta(d.Path));
+                    VRMmetaLoadedAction?.Invoke(LoadVRMMeta(d.Path));
                 }
 
                 else if (e.CommandType == typeof(PipeCommands.SetLipSyncEnable))
@@ -1766,7 +1766,7 @@ namespace VMC
                 await ImportVRM(Settings.Current.VRMPath);
 
                 //メタ情報をOSC送信する
-                VRMmetaLodedAction?.Invoke(LoadVRMMeta(Settings.Current.VRMPath));
+                VRMmetaLoadedAction?.Invoke(LoadVRMMeta(Settings.Current.VRMPath));
             }
 
             //SetResolutionは強制的にウインドウ枠を復活させるのでBorder設定の前にやっておく必要がある

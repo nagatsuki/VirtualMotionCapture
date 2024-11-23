@@ -73,7 +73,7 @@ namespace VMC
                 this.currentCamera = currentCamera;
             };
 
-            window.VRMmetaLodedAction += (UnityMemoryMappedFile.VRMData vrmdata) =>
+            window.VRMmetaLoadedAction += (UnityMemoryMappedFile.VRMData vrmdata) =>
             {
                 this.vrmdata = vrmdata;
                 this.remoteName = null;
