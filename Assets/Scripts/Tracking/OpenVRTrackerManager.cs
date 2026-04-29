@@ -122,10 +122,36 @@ namespace VMC
         private DeviceInfo[] allDeviceInfo = new DeviceInfo[OpenVR.k_unMaxTrackedDeviceCount];
         private string[] serialNumbers = new string[OpenVR.k_unMaxTrackedDeviceCount];
 
+        private float GetPredictedSecondsToPhotonsFromNow()
+        {
+            // 最後のVSyncからの経過秒数
+            float timeSinceLastVsyncInSecond = 0;
+            ulong frameCounter = 0;
+            if (!openVR.GetTimeSinceLastVsync(ref timeSinceLastVsyncInSecond, ref frameCounter))
+                return 0.0f;
+
+            // 1フレームあたりの秒数
+            ETrackedPropertyError error = ETrackedPropertyError.TrackedProp_Success;
+            float displayFrequency = openVR.GetFloatTrackedDeviceProperty(OpenVR.k_unTrackedDeviceIndex_Hmd, ETrackedDeviceProperty.Prop_DisplayFrequency_Float, ref error);
+            if (error != ETrackedPropertyError.TrackedProp_Success)
+                return 0.0f;
+
+            float frameDurationInSeconds = 1.0f / displayFrequency;
+
+            // VSyncからディスプレイパネル発光までの秒数
+            float vsyncToPhotonsInSeconds = openVR.GetFloatTrackedDeviceProperty(OpenVR.k_unTrackedDeviceIndex_Hmd, ETrackedDeviceProperty.Prop_SecondsFromVsyncToPhotons_Float, ref error);
+            if (error != ETrackedPropertyError.TrackedProp_Success)
+                return 0.0f;
+
+            // 現在から予測されるディスプレイパネル発光までの秒数 = 1フレームの秒数 - 最後のVSyncからの秒数 + VSyncから発光までの秒数
+            return frameDurationInSeconds - timeSinceLastVsyncInSecond + vsyncToPhotonsInSeconds;
+        }
+
         private void GetAllDevicePose()
         {
+            float predictedSecondsFromNow = GetPredictedSecondsToPhotonsFromNow();
 
-            openVR.GetDeviceToAbsoluteTrackingPose(universeOrigin, 0, allPoses);
+            openVR.GetDeviceToAbsoluteTrackingPose(universeOrigin, predictedSecondsFromNow, allPoses);
             for (uint index = 0; index < OpenVR.k_unMaxTrackedDeviceCount; index++)
             {
                 var postfix = "";
