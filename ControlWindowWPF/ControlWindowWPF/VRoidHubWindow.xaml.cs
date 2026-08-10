@@ -79,6 +79,14 @@ namespace VirtualMotionCaptureControlPanel
 
         public class ModelItem : ViewModelBase
         {
+            public ModelItem()
+            {
+                //Visibilityの既定値はVisibleのため、未設定のままだとVRM0.xとVRM1.0のライセンス表示が両方出てしまう。
+                //(モデル未選択時は空のModelItemをDataContextにしているため)
+                licence_visibility = Visibility.Collapsed;
+                licence_vrm10_visibility = Visibility.Collapsed;
+            }
+
             public string id { get { return Getter<string>(); } set { Setter(value); } }
 
             public string portrait_image_sq150 { get { return Getter<string>(); } set { Setter(value); } }
@@ -127,6 +135,9 @@ namespace VirtualMotionCaptureControlPanel
             //ItemsSourceにObservableCollectionを直接バインドし、追記は正しい位置へInsertする。
             //(CollectionViewのソートは追加のたびに再評価されスクロール位置がリセットされるため使わない)
             ModelListBox.ItemsSource = ModelItems;
+            //DataContextがnullのままだとバインドが解決できずVisibilityが既定のVisibleになり、
+            //モデル未選択の状態でライセンス表示が出てしまうため、空のModelItemを入れておく
+            this.DataContext = new ModelItem();
         }
 
         //orderの昇順を保ったまま、同order末尾へ挿入する(仮想化リストのスクロール位置を維持)
@@ -177,6 +188,20 @@ namespace VirtualMotionCaptureControlPanel
         {
             await Globals.Client?.SendCommandAsync(new PipeCommands.VRoidSDK_DoLogin { });
             ChangePanel(Panels.Code);
+        }
+
+        private async void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            //ログアウト後にスクロールでの続き読み込みや、
+            //ウインドウ再アクティブ時の再取得(Window_Activated)が走らないようにする
+            canLoadModels = false;
+
+            //前のアカウントの一覧が残らないようにクリアしておく
+            //(パネルの切り替えはUnity側からのVRoidSDK_NeedLoginで行われる)
+            ModelItems.Clear();
+            _hasNext.Clear();
+            this.DataContext = new ModelItem();
+            await Globals.Client?.SendCommandAsync(new PipeCommands.VRoidSDK_Logout { });
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)

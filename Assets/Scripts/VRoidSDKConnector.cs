@@ -122,6 +122,10 @@ namespace VMC
                 {
                     DoLogin();
                 }
+                else if (e.CommandType == typeof(PipeCommands.VRoidSDK_Logout))
+                {
+                    Logout();
+                }
                 else if (e.CommandType == typeof(PipeCommands.VRoidSDK_RequestAccountCharacterModels))
                 {
                     RequestAccountCharacterModels();
@@ -268,6 +272,25 @@ namespace VMC
                 _model.AuthorizationState = ApiModel.State.AUTHORIZATION_CODE_REQUESTED;
                 await server.SendCommandAsync(new PipeCommands.VRoidSDK_NeedLogin { });
             }
+        }
+
+        /// <summary>
+        /// 保存されている認証情報を破棄してログイン前の状態に戻す。
+        /// 次回はブラウザでのアプリケーション連携からやり直しになる。
+        /// </summary>
+        public async void Logout()
+        {
+            //まだ一度も認証処理を開始していない場合は何もしない
+            if (_oauthClient == null) return;
+
+            _model?.ClearUserInfo();
+            _oauthClient.ReleaseAuthorizedAccount(); //保存済みのアカウント情報(トークン)を削除する
+
+            //別アカウントでログインし直した時に前のアカウントの一覧が残らないようにする
+            _characterModels?.Clear();
+            _nextLinks?.Clear();
+
+            await server.SendCommandAsync(new PipeCommands.VRoidSDK_NeedLogin { });
         }
 
         public void DoLogin()

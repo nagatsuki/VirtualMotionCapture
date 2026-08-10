@@ -30,6 +30,8 @@ namespace UnityMemoryMappedFile
 
         public class VRoidSDK_NeedLogin { }
         public class VRoidSDK_DoLogin { }
+        //保存されている認証情報を破棄してログイン前の状態に戻す
+        public class VRoidSDK_Logout { }
 
         public class VRoidSDK_RegisterCode
         {

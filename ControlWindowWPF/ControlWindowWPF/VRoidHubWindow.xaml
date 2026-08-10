@@ -61,7 +61,10 @@
             <DockPanel>
                 <GroupBox Header="{DynamicResource VRoidHubWindow_ModelList}" DockPanel.Dock="Left" FontSize="14" BorderThickness="0" BorderBrush="Transparent">
                     <DockPanel>
-                        <Button Content="{DynamicResource VRoidHubWindow_FindModelOnVRoidHub}" Padding="30,10,30,10" Margin="0,5,0,0" Name="VRoidHubFindModelButton" Click="VRoidHubFindModelButton_Click" DockPanel.Dock="Bottom" HorizontalAlignment="Left"/>
+                        <DockPanel DockPanel.Dock="Bottom" Margin="0,5,0,0">
+                            <Button Content="{DynamicResource VRoidHubWindow_Logout}" Padding="15,10,15,10" Name="LogoutButton" Click="LogoutButton_Click" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="5,0,5,0"/>
+                            <Button Content="{DynamicResource VRoidHubWindow_FindModelOnVRoidHub}" Padding="30,10,30,10" Name="VRoidHubFindModelButton" Click="VRoidHubFindModelButton_Click" HorizontalAlignment="Left"/>
+                        </DockPanel>
                         <ListBox Name="ModelListBox" Width="350" Background="Transparent" SelectionChanged="ModelListBox_SelectionChanged" HorizontalContentAlignment="Stretch" ScrollViewer.ScrollChanged="ModelListBox_ScrollChanged">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>

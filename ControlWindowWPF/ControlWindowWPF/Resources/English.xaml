@@ -602,6 +602,7 @@
     <system:String x:Key="VRoidHubWindow_Register">Enter</system:String>
     <system:String x:Key="VRoidHubWindow_ModelList">Model List</system:String>
     <system:String x:Key="VRoidHubWindow_FindModelOnVRoidHub">Find models on VRoid Hub</system:String>
+    <system:String x:Key="VRoidHubWindow_Logout">Logout</system:String>
     <system:String x:Key="VRoidHubWindow_ModelInfo">Model Info</system:String>
     <system:String x:Key="VRoidHubWindow_AllowedUser">Allowed User</system:String>
     <system:String x:Key="VRoidHubWindow_ViolentExpression">Violent</system:String>

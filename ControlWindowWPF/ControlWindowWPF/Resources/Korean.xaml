@@ -603,6 +603,7 @@
     <system:String x:Key="VRoidHubWindow_Register">인증</system:String>
     <system:String x:Key="VRoidHubWindow_ModelList">모델목록</system:String>
     <system:String x:Key="VRoidHubWindow_FindModelOnVRoidHub">VRoid Hub로 모델을 찾기</system:String>
+    <system:String x:Key="VRoidHubWindow_Logout">로그아웃</system:String>
     <system:String x:Key="VRoidHubWindow_ModelInfo">모델정보</system:String>
     <system:String x:Key="VRoidHubWindow_AllowedUser">아바타로서의 사용</system:String>
     <system:String x:Key="VRoidHubWindow_ViolentExpression">폭력표현의 사용</system:String>

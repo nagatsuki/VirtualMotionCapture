@@ -604,6 +604,7 @@
     <system:String x:Key="VRoidHubWindow_Register">进入</system:String>
     <system:String x:Key="VRoidHubWindow_ModelList">模型列表</system:String>
     <system:String x:Key="VRoidHubWindow_FindModelOnVRoidHub">在 VRoid Hub 寻找模型</system:String>
+    <system:String x:Key="VRoidHubWindow_Logout">登出</system:String>
     <system:String x:Key="VRoidHubWindow_ModelInfo">模型信息</system:String>
     <system:String x:Key="VRoidHubWindow_AllowedUser">作为虚拟形象</system:String>
     <system:String x:Key="VRoidHubWindow_ViolentExpression">暴力行为</system:String>

@@ -601,6 +601,7 @@
     <system:String x:Key="VRoidHubWindow_Register">認証する</system:String>
     <system:String x:Key="VRoidHubWindow_ModelList">モデル一覧</system:String>
     <system:String x:Key="VRoidHubWindow_FindModelOnVRoidHub">VRoid Hubでモデルを探す</system:String>
+    <system:String x:Key="VRoidHubWindow_Logout">ログアウト</system:String>
     <system:String x:Key="VRoidHubWindow_ModelInfo">モデル情報</system:String>
     <system:String x:Key="VRoidHubWindow_AllowedUser">アバターとしての利用</system:String>
     <system:String x:Key="VRoidHubWindow_ViolentExpression">暴力表現での利用</system:String>
